@@ -1,0 +1,327 @@
+﻿ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graduates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+     
+     
+</head>
+<body>
+    <div class="container-fluid mt-5">
+        <h2 class="text-left">Graduates</h2>
+
+         
+        <div class="d-flex justify-content-start mb-4">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addGraduateModal">
+                Add Graduate
+            </button>
+        </div>
+
+        <table class="table table-bordered table-hover custom-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Enrollment Date</th>
+                    <th scope="col">Course</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Certification Number</th>
+                    <th scope="col">CNIC</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Emergency Contact</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="graduatesTableBody">
+                <!-- Table rows for graduates will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal for Adding or Editing Graduate -->
+    <div class="modal fade" id="addGraduateModal" tabindex="-1" role="dialog" aria-labelledby="addGraduateModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <input type="hidden" id="graduateId">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addGraduateModalLabel">Add Graduate</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addGraduateForm">
+                        <!-- Image Upload with Default Preview -->
+                        <div class="form-group text-center">
+                            <input type="file" class="form-control-file mt-2" id="graduateImage" accept="image/*" onchange="previewImage(event)">
+                            <img id="graduateImagePreview" src="" class="mt-3 circle-image" style="display:none;" />
+                        </div>
+                        <div class="form-group">
+                            <label for="graduateName">Name:</label>
+                            <input type="text" class="form-control" id="graduateName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="graduateEnrollmentDate">Enrollment Date:</label>
+                            <input type="date" class="form-control" id="graduateEnrollmentDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="graduateCourse">Course:</label>
+                            <input type="text" class="form-control" id="graduateCourse" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="graduateLocation">Location:</label>
+                            <input type="text" class="form-control" id="graduateLocation" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="graduatePhone">Phone:</label>
+                            <input type="text" class="form-control" id="graduatePhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="graduateEmail">Email:</label>
+                            <input type="email" class="form-control" id="graduateEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="graduateCertificationNumber">Certification Number:</label>
+                            <input type="text" class="form-control" id="graduateCertificationNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="graduateCnic">CNIC:</label>
+                            <input type="text" class="form-control" id="graduateCnic" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="graduateAddress">Address:</label>
+                            <input type="text" class="form-control" id="graduateAddress" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="graduateEmergencyContact">Emergency Contact:</label>
+                            <input type="text" class="form-control" id="graduateEmergencyContact" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: gray; color: white;">Close</button>
+                            <button type="submit" form="addGraduateForm" class="btn btn-primary" style="background-color: blue; color: white;">Save Graduate</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+
+
+
+
+
+                                                          
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        // Function to preview image
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                $('#graduateImagePreview').attr('src', e.target.result);
+            };
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Handle Add/Edit Graduate Form Submission
+        $("#addGraduateForm").on("submit", function (event) {
+            event.preventDefault();
+
+            const graduateData = {
+                id: $("#graduateId").val() || 0,
+                image: $('#graduateImagePreview').attr('src'),
+                name: $("#graduateName").val(),
+                enrollmentDate: $("#graduateEnrollmentDate").val(),
+                course: $("#graduateCourse").val(),
+                location: $("#graduateLocation").val(),
+                phone: $("#graduatePhone").val(),
+                email: $("#graduateEmail").val(),
+                certificationNumber: $("#graduateCertificationNumber").val(),
+                cnic: $("#graduateCnic").val(),
+                address: $("#graduateAddress").val(),
+                emergencyContact: $("#graduateEmergencyContact").val(),
+            };
+
+            const url = graduateData.id == 0 ? '/Graduate/AddGraduate' : '/Graduate/EditGraduate';
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(graduateData),
+                success: function (response) {
+                    $('#addGraduateModal').modal('hide');
+                    $("#addGraduateForm")[0].reset();
+                    $('#graduateImagePreview').hide().attr('src', '');
+                    $('#graduateId').val(0);
+                    $('.modal-backdrop').remove(); // Remove the backdrop
+
+                    addOrUpdateGraduateInTable(response);
+                },
+                error: function (xhr) {
+                    console.error("Error:", xhr.responseText);
+                    alert("An error occurred. Please try again.");
+                }
+            });
+        });
+
+        // Function to add or update graduate in the table
+        function addOrUpdateGraduateInTable(graduate) {
+            const row = $(`#graduatesTableBody tr[data-id="${graduate.id}"]`);
+            const rowHTML = `
+                <tr data-id="${graduate.id}">
+                    <td><img src="${graduate.image}" alt="Graduate Image" class="circle-image" /></td>
+                    <td>${graduate.name}</td>
+                    <td>${formatDate(graduate.enrollmentDate)}</td>
+                    <td>${graduate.course}</td>
+                    <td>${graduate.location}</td>
+                    <td>${graduate.phone}</td>
+                    <td>${graduate.email}</td>
+                    <td>${graduate.certificationNumber}</td>
+                    <td>${graduate.cnic}</td>
+                    <td>${graduate.address}</td>
+                    <td>${graduate.emergencyContact}</td>
+                    <td>
+                                <button class="btn btn-sm btn-warning edit-graduate" data-id="${graduate.id}" style="width: 60px;">Edit</button>
+                                <button class="btn btn-sm btn-danger delete-graduate" data-id="${graduate.id}"style="width: 60px;">Delete</button>
+                    </td>
+                </tr>
+            `;
+
+            if (row.length) {
+                row.replaceWith(rowHTML);
+            } else {
+                $("#graduatesTableBody").append(rowHTML);
+            }
+        }
+
+        // Event delegation for Edit button
+        $(document).on("click", ".edit-graduate", function () {
+            const id = $(this).data("id");
+
+            $.getJSON(`/Graduate/GetGraduate?id=${id}`, function (graduate) {
+                $("#graduateId").val(graduate.id);
+                $("#graduateName").val(graduate.name);
+                $("#graduateEnrollmentDate").val(graduate.enrollmentDate.split('T')[0]); // Ensure date format
+                $("#graduateCourse").val(graduate.course);
+                $("#graduateLocation").val(graduate.location);
+                $("#graduatePhone").val(graduate.phone);
+                $("#graduateEmail").val(graduate.email);
+                $("#graduateCertificationNumber").val(graduate.certificationNumber);
+                $("#graduateCnic").val(graduate.cnic);
+                $("#graduateAddress").val(graduate.address);
+                $("#graduateEmergencyContact").val(graduate.emergencyContact);
+                $("#graduateImagePreview").attr("src", graduate.image);
+
+                $("#addGraduateModalLabel").text("Edit Graduate");
+                $('#addGraduateModal').modal('show');
+            });
+        });
+
+        // Event delegation for Delete button
+        $(document).on("click", ".delete-graduate", function () {
+            const id = $(this).data("id");
+
+            if (confirm("Are you sure you want to delete this graduate?")) {
+                $.post(`/Graduate/DeleteGraduate?id=${id}`, function (response) {
+                    if (response.success) {
+                        $(`#graduatesTableBody tr[data-id="${id}"]`).remove();
+                    } else {
+                        alert(response.message);
+                    }
+                });
+            }
+        });
+
+        // Format date for display
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-CA'); // Adjust format as needed
+        }
+
+    </script>
+
+
+
+
+
+    <style>
+        /* .circle-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        } */
+
+        body, html {
+            padding: 0;
+            margin: 0;
+        }
+
+        .container-fluid, .container {
+            padding-left: 30px !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: auto !important;
+        }
+
+        .custom-table {
+            margin-left: 0; /* Aligns the table to the left */
+            margin-right: auto; /* Ensures no right margin */
+            width: 100%; /* Optional, ensures the table takes up the full width */
+        }
+        .circle-image {
+            width: 100px;  
+            height: 100px;  
+            border-radius: 50%;  
+            object-fit: cover;  
+        }
+
+        
+       
+        /******************************************New Css Strt***********************************************/
+
+       
+
+    </style>
+</body>
+</html>
